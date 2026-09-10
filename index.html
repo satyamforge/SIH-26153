@@ -1,0 +1,756 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>NetGuard AI | SIH 26153</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- =========================
+         SIDEBAR
+    ========================== -->
+
+    <aside class="sidebar">
+
+        <div class="logo">
+            <div class="logo-icon">N</div>
+
+            <div>
+                <h2>NETGUARD</h2>
+                <span>AI SECURITY</span>
+            </div>
+        </div>
+
+        <nav class="navigation">
+
+            <button class="nav-item active" data-section="dashboard">
+                <span class="nav-icon">⌂</span>
+                Dashboard
+            </button>
+
+            <button class="nav-item" data-section="analysis">
+                <span class="nav-icon">◈</span>
+                Analysis
+            </button>
+
+            <button class="nav-item" data-section="threats">
+                <span class="nav-icon">⚠</span>
+                Threats
+            </button>
+
+            <button class="nav-item" data-section="reports">
+                <span class="nav-icon">▤</span>
+                Reports
+            </button>
+
+        </nav>
+
+        <div class="sidebar-bottom">
+
+            <div class="system-status">
+                <span class="status-dot"></span>
+
+                <div>
+                    <strong>System Online</strong>
+                    <small>Local AI Engine</small>
+                </div>
+            </div>
+
+            <div class="offline-badge">
+                <span>●</span>
+                RUNNING LOCALLY
+            </div>
+
+        </div>
+
+    </aside>
+
+
+    <!-- =========================
+         MAIN CONTENT
+    ========================== -->
+
+    <main class="main-content">
+
+        <!-- HEADER -->
+
+        <header class="topbar">
+
+            <div>
+                <p class="eyebrow">SECURITY OPERATIONS CENTER</p>
+                <h1>Network Threat Intelligence</h1>
+            </div>
+
+            <div class="topbar-right">
+
+                <div class="model-status">
+                    <span class="status-dot"></span>
+                    <span>AI MODEL ACTIVE</span>
+                </div>
+
+                <button class="icon-button" id="notificationButton">
+                    🔔
+                    <span class="notification-dot"></span>
+                </button>
+
+            </div>
+
+        </header>
+
+
+        <!-- =========================
+             DASHBOARD SECTION
+        ========================== -->
+
+        <section id="dashboard" class="page-section active-section">
+
+            <!-- HERO -->
+
+            <div class="hero-card">
+
+                <div class="hero-content">
+
+                    <div class="section-tag">
+                        <span>◆</span>
+                        AI THREAT FORECASTING
+                    </div>
+
+                    <h2>
+                        Predict attacks
+                        <span>before compromise.</span>
+                    </h2>
+
+                    <p>
+                        Analyze network traffic and forecast malicious
+                        activity using an AI world model trained on
+                        network state transitions.
+                    </p>
+
+                    <div class="hero-actions">
+
+                        <button class="primary-button" id="loadSampleButton">
+                            <span>⚡</span>
+                            Load Sample Data
+                        </button>
+
+                        <button class="secondary-button" id="uploadHeroButton">
+                            <span>↑</span>
+                            Upload Traffic
+                        </button>
+
+                    </div>
+
+                </div>
+
+                <div class="hero-visual">
+
+                    <div class="radar-circle">
+
+                        <div class="radar-line"></div>
+
+                        <div class="radar-ring ring-one"></div>
+                        <div class="radar-ring ring-two"></div>
+                        <div class="radar-ring ring-three"></div>
+
+                        <div class="radar-center">
+                            <span>AI</span>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- STATS -->
+
+            <div class="stats-grid">
+
+                <div class="stat-card">
+
+                    <div class="stat-icon">◉</div>
+
+                    <div>
+                        <span>NETWORK FLOWS</span>
+                        <strong id="flowCount">0</strong>
+                    </div>
+
+                </div>
+
+
+                <div class="stat-card">
+
+                    <div class="stat-icon warning-icon">⚠</div>
+
+                    <div>
+                        <span>FLAGGED FLOWS</span>
+                        <strong id="flaggedCount">0</strong>
+                    </div>
+
+                </div>
+
+
+                <div class="stat-card">
+
+                    <div class="stat-icon danger-icon">!</div>
+
+                    <div>
+                        <span>MAX RISK</span>
+                        <strong id="maxRisk">0%</strong>
+                    </div>
+
+                </div>
+
+
+                <div class="stat-card">
+
+                    <div class="stat-icon success-icon">✓</div>
+
+                    <div>
+                        <span>MODEL STATUS</span>
+                        <strong class="online-text">ONLINE</strong>
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- UPLOAD AREA -->
+
+            <div class="panel upload-panel">
+
+                <div class="panel-header">
+
+                    <div>
+                        <p class="panel-label">INPUT</p>
+                        <h3>Network Traffic Data</h3>
+                    </div>
+
+                    <span class="file-format">
+                        PCAP / PCAPNG / CSV
+                    </span>
+
+                </div>
+
+
+                <div
+                    class="drop-zone"
+                    id="dropZone"
+                >
+
+                    <div class="upload-icon">
+                        ↑
+                    </div>
+
+                    <h3>Drop network traffic here</h3>
+
+                    <p>
+                        Drag & drop your PCAP, PCAPNG or CSV file
+                    </p>
+
+                    <button
+                        class="browse-button"
+                        id="browseButton"
+                    >
+                        Browse Files
+                    </button>
+
+                    <input
+                        type="file"
+                        id="fileInput"
+                        accept=".pcap,.pcapng,.csv"
+                        hidden
+                    >
+
+                    <small>
+                        Maximum file size: 50 MB
+                    </small>
+
+                </div>
+
+
+                <div
+                    class="selected-file"
+                    id="selectedFile"
+                    hidden
+                >
+
+                    <div class="file-info">
+
+                        <span class="file-icon">▣</span>
+
+                        <div>
+                            <strong id="fileName">
+                                file.pcap
+                            </strong>
+
+                            <small id="fileSize">
+                                0 KB
+                            </small>
+                        </div>
+
+                    </div>
+
+                    <button id="removeFileButton">
+                        ×
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <!-- ANALYSIS CONTROL -->
+
+            <div class="analysis-control panel">
+
+                <div>
+
+                    <p class="panel-label">ANALYSIS ENGINE</p>
+
+                    <h3>
+                        Ready to forecast network attacks
+                    </h3>
+
+                    <p class="muted">
+                        Upload traffic data or use the bundled
+                        sample dataset for the demonstration.
+                    </p>
+
+                </div>
+
+                <div class="analysis-actions">
+
+                    <button
+                        class="secondary-button"
+                        id="resetButton"
+                    >
+                        ↻ Reset
+                    </button>
+
+                    <button
+                        class="primary-button large-button"
+                        id="runAnalysisButton"
+                    >
+                        ▶ Run Analysis
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <!-- PROGRESS -->
+
+            <div
+                class="panel progress-panel"
+                id="progressPanel"
+                hidden
+            >
+
+                <div class="panel-header">
+
+                    <div>
+                        <p class="panel-label">PROCESSING</p>
+                        <h3 id="progressTitle">
+                            Analyzing network traffic
+                        </h3>
+                    </div>
+
+                    <strong id="progressPercent">
+                        0%
+                    </strong>
+
+                </div>
+
+                <div class="progress-bar">
+
+                    <div
+                        class="progress-fill"
+                        id="progressFill"
+                    ></div>
+
+                </div>
+
+                <div class="progress-stages">
+
+                    <span id="stageExtract">
+                        01 Extracting Features
+                    </span>
+
+                    <span id="stageModel">
+                        02 Running AI Model
+                    </span>
+
+                    <span id="stageExplain">
+                        03 Computing Explanations
+                    </span>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =========================
+             ANALYSIS SECTION
+        ========================== -->
+
+        <section
+            id="analysis"
+            class="page-section"
+        >
+
+            <div class="page-heading">
+
+                <div>
+                    <p class="eyebrow">AI FORECAST</p>
+                    <h2>Infiltration Probability</h2>
+                    <p>
+                        Predicted probability of malicious
+                        progression across future network windows.
+                    </p>
+                </div>
+
+                <div class="risk-display">
+
+                    <span>CURRENT RISK</span>
+
+                    <strong id="currentRisk">
+                        0%
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+            <!-- TIMELINE -->
+
+            <div class="panel timeline-panel">
+
+                <div class="panel-header">
+
+                    <div>
+                        <p class="panel-label">WORLD MODEL FORECAST</p>
+                        <h3>Attack Progression Timeline</h3>
+                    </div>
+
+                    <div class="timeline-controls">
+
+                        <button class="time-button active">
+                            10 WINDOWS
+                        </button>
+
+                        <button class="time-button">
+                            25 WINDOWS
+                        </button>
+
+                        <button class="time-button">
+                            50 WINDOWS
+                        </button>
+
+                    </div>
+
+                </div>
+
+
+                <div class="timeline-chart">
+
+                    <canvas id="probabilityChart"></canvas>
+
+                    <div class="attack-bands">
+
+                        <div class="attack-band recon">
+                            <span>RECON</span>
+                        </div>
+
+                        <div class="attack-band initial">
+                            <span>INITIAL ACCESS</span>
+                        </div>
+
+                        <div class="attack-band lateral">
+                            <span>LATERAL MOVEMENT</span>
+                        </div>
+
+                        <div class="attack-band c2">
+                            <span>C2</span>
+                        </div>
+
+                        <div class="attack-band exfil">
+                            <span>EXFILTRATION</span>
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="stage-legend">
+
+                    <span>
+                        <i class="legend-dot recon-dot"></i>
+                        Reconnaissance
+                        <button class="info-button" title="Reconnaissance: attacker gathers information about the target network.">?</button>
+                    </span>
+
+                    <span>
+                        <i class="legend-dot initial-dot"></i>
+                        Initial Access
+                        <button class="info-button" title="Initial Access: attacker attempts to enter the target environment.">?</button>
+                    </span>
+
+                    <span>
+                        <i class="legend-dot lateral-dot"></i>
+                        Lateral Movement
+                        <button class="info-button" title="Lateral Movement: attacker moves through compromised systems.">?</button>
+                    </span>
+
+                    <span>
+                        <i class="legend-dot c2-dot"></i>
+                        Command & Control
+                        <button class="info-button" title="Command & Control: compromised systems communicate with attacker infrastructure.">?</button>
+                    </span>
+
+                    <span>
+                        <i class="legend-dot exfil-dot"></i>
+                        Exfiltration
+                        <button class="info-button" title="Exfiltration: attacker attempts to steal or transfer data.">?</button>
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <!-- MODEL COMPARISON -->
+
+            <div class="comparison-grid">
+
+                <div class="panel model-card">
+
+                    <div class="panel-header">
+
+                        <div>
+                            <p class="panel-label">PRIMARY MODEL</p>
+                            <h3>AI World Model</h3>
+                        </div>
+
+                        <span class="model-badge">ACTIVE</span>
+
+                    </div>
+
+                    <div class="model-score">
+                        <strong id="worldF1">0.94</strong>
+                        <span>F1 SCORE</span>
+                    </div>
+
+                    <div class="metric-list">
+
+                        <div>
+                            <span>Precision</span>
+                            <strong>0.93</strong>
+                        </div>
+
+                        <div>
+                            <span>Recall</span>
+                            <strong>0.95</strong>
+                        </div>
+
+                        <div>
+                            <span>False Positive Rate</span>
+                            <strong>0.04</strong>
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="panel model-card baseline-card">
+
+                    <div class="panel-header">
+
+                        <div>
+                            <p class="panel-label">BASELINE</p>
+                            <h3>Logistic Regression</h3>
+                        </div>
+
+                        <span class="baseline-badge">
+                            COMPARISON
+                        </span>
+
+                    </div>
+
+                    <div class="model-score">
+                        <strong>0.81</strong>
+                        <span>F1 SCORE</span>
+                    </div>
+
+                    <div class="metric-list">
+
+                        <div>
+                            <span>Precision</span>
+                            <strong>0.79</strong>
+                        </div>
+
+                        <div>
+                            <span>Recall</span>
+                            <strong>0.83</strong>
+                        </div>
+
+                        <div>
+                            <span>False Positive Rate</span>
+                            <strong>0.11</strong>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =========================
+             THREATS SECTION
+        ========================== -->
+
+        <section
+            id="threats"
+            class="page-section"
+        >
+
+            <div class="page-heading">
+
+                <div>
+                    <p class="eyebrow">THREAT INTELLIGENCE</p>
+                    <h2>Flagged Network Flows</h2>
+                    <p>
+                        Network flows identified as potentially
+                        malicious by the AI model.
+                    </p>
+                </div>
+
+                <div class="table-actions">
+
+                    <input
+                        type="search"
+                        id="flowSearch"
+                        placeholder="Search IP / protocol..."
+                    >
+
+                    <select id="stageFilter">
+
+                        <option value="all">
+                            All Stages
+                        </option>
+
+                        <option value="Reconnaissance">
+                            Reconnaissance
+                        </option>
+
+                        <option value="Initial Access">
+                            Initial Access
+                        </option>
+
+                        <option value="Lateral Movement">
+                            Lateral Movement
+                        </option>
+
+                        <option value="Command & Control">
+                            Command & Control
+                        </option>
+
+                        <option value="Exfiltration">
+                            Exfiltration
+                        </option>
+
+                    </select>
+
+                </div>
+
+            </div>
+
+
+            <div class="panel table-panel">
+
+                <div class="table-top">
+
+                    <span id="tableResultCount">
+                        0 flagged flows
+                    </span>
+
+                    <button
+                        class="secondary-button small-button"
+                        id="exportCsvButton"
+                    >
+                        ↓ Export CSV
+                    </button>
+
+                </div>
+
+
+                <div class="table-wrapper">
+
+                    <table>
+
+                        <thead>
+
+                            <tr>
+
+                                <th data-sort="source">
+                                    SOURCE ↕
+                                </th>
+
+                                <th data-sort="destination">
+                                    DESTINATION ↕
+                                </th>
+
+                                <th data-sort="port">
+                                    PORT ↕
+                                </th>
+
+                                <th data-sort="protocol">
+                                    PROTOCOL ↕
+                                </th>
+
+                                <th data-sort="risk">
+                                    RISK SCORE ↕
+                                </th>
+
+                                <th data-sort="stage">
+                                    PREDICTED STAGE ↕
+                                </th>
+
+                                <th>
+                                    ACTION
+                                </th>
+
+                            </tr>
+
+                        </thead>
+
+                        <tbody id="flowsTableBody">
+
+                        </tbody>
+        </table>
+    </div>
+</div>
+</section>
+
+</main>
+
+<script src="script.js"></script>
+
+</body>
+</html>
