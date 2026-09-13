@@ -1,0 +1,543 @@
+🛡️ NETRA — Everything in Simple Language
+1. What is NETRA?
+
+NETRA = Network Attack Forecasting System.
+
+Simple explanation:
+
+“NETRA looks at network traffic, checks whether the traffic looks suspicious, and then estimates whether the attack risk is going to increase in the next few minutes.”
+
+One line to memorize:
+
+“NETRA doesn't just detect attacks; it forecasts attack risk.”
+
+2. What problem are we solving?
+
+Normal cybersecurity systems are often reactive.
+
+For example:
+
+Hacker attacks
+      ↓
+System detects attack
+      ↓
+Alert
+      ↓
+Administrator reacts
+
+The problem is that by the time the attack is detected, damage may already be happening.
+
+NETRA tries to change this:
+
+Network traffic
+      ↓
+Analyze patterns
+      ↓
+Detect suspicious behavior
+      ↓
+Forecast future risk
+      ↓
+Warning
+      ↓
+Administrator prepares
+Tell the judges:
+
+“Our objective is to move from reactive security toward proactive security.”
+
+3. What is network traffic?
+
+This sounds complicated but it isn't.
+
+Imagine the internet as a road.
+
+Cars = network connections.
+
+NETRA observes characteristics of those connections.
+
+For example:
+
+How long the connection lasted
+How many packets were sent
+How large those packets were
+How frequently packets were sent
+Source and destination information
+Other flow-level characteristics
+
+These characteristics become the input for our AI model.
+
+4. What dataset did we use?
+
+We used:
+
+CIC-IDS2017
+
+You can simply say:
+
+“We trained our prototype using the CIC-IDS2017 dataset, which contains normal network traffic as well as different types of cyberattack traffic.”
+
+The dataset contains examples of attacks such as:
+
+DoS
+DDoS
+PortScan
+Brute Force
+Bot attacks
+Web attacks
+Infiltration
+
+Don't try to memorize all of them.
+
+Just remember:
+
+“Normal traffic + attack traffic.”
+
+5. What happens to the dataset?
+
+This is the easiest way to explain it:
+
+Raw Network Traffic
+        ↓
+Clean the data
+        ↓
+Select useful numerical features
+        ↓
+Give them to ML model
+
+Our dataset has many network-flow characteristics.
+
+After preprocessing, our prototype uses 70 features for the trained model.
+
+If a judge asks:
+
+“Why preprocessing?”
+
+Answer:
+
+“Real-world data can contain missing, invalid, or non-numerical values, so we clean and convert the data before giving it to the machine-learning model.”
+
+6. What AI model are we using?
+Random Forest
+
+Don't explain the mathematics.
+
+Tell them:
+
+“Random Forest is a machine-learning algorithm that uses many decision trees together to make a more reliable classification.”
+
+Think of it like:
+
+Decision Tree 1 ──┐
+Decision Tree 2 ──┤
+Decision Tree 3 ──┤──→ Final Decision
+Decision Tree 4 ──┤
+Decision Tree 5 ──┘
+
+Many trees vote together.
+
+Judge asks: Why Random Forest?
+
+Say:
+
+“Because our network data is structured tabular data with many features, and Random Forest is effective for this type of classification and is practical for our prototype.”
+
+7. What does the model actually predict?
+
+This is VERY important.
+
+Our current model does:
+
+Network Traffic
+      ↓
+       AI
+      ↓
+BENIGN or ATTACK
+
+But internally we use the probability from the model.
+
+So instead of only:
+
+Attack ❌
+
+we can get something like:
+
+Attack probability = 63%
+
+That probability is what we use for forecasting.
+
+8. What does "attack probability" mean?
+
+Suppose NETRA says:
+
+10%
+
+It means:
+
+“The current traffic pattern has a relatively low estimated attack risk.”
+
+Suppose it says:
+
+75%
+
+That means:
+
+“The current traffic pattern appears much more suspicious and should be monitored.”
+
+It's not saying there is exactly a 75% chance a hacker will attack.
+
+It's better to say:
+
+“The model's estimated attack risk is 75% based on the observed traffic pattern.”
+
+That's a much safer technical explanation.
+
+9. Where does FORECASTING come in?
+
+This is the most important part of your project.
+
+Imagine we have:
+
+Minute 1 → 5%
+Minute 2 → 6%
+Minute 3 → 7%
+Minute 4 → 8%
+Minute 5 → 9%
+
+The risk is increasing.
+
+NETRA looks at this recent trend and estimates what might happen next.
+
+For example:
+
+Current
+   ↓
+6.3%
+
+Future
+   ↓
+7.2%
+7.7%
+8.3%
+8.8%
+9.3%
+That's the forecasting part.
+
+Say:
+
+“We use the recent sequence of attack probabilities to estimate the direction of future risk.”
+
+10. Is this an LSTM?
+
+NO.
+
+Don't let your teammates accidentally say:
+
+“We use LSTM.”
+
+We don't.
+
+Our current prototype uses:
+
+Random Forest + temporal trend forecasting
+
+That's completely okay for the prototype.
+
+If judges ask:
+
+“Why didn't you use LSTM?”
+
+Answer:
+
+“For the current prototype we chose a simpler and faster forecasting approach so that the system can demonstrate the complete detection-to-forecast pipeline. A more advanced time-series model such as LSTM or Transformer-based forecasting can be added in the next stage.”
+
+That's actually a good answer.
+
+11. What is a traffic window?
+
+This sounds scary but it's simple.
+
+We don't look at every individual network flow separately on the dashboard.
+
+We group flows together into small sequential groups.
+
+Think:
+
+1000 network flows
+       ↓
+ One traffic window
+       ↓
+Calculate average attack probability
+
+Then:
+
+Window 1 → 4%
+Window 2 → 5%
+Window 3 → 6%
+Window 4 → 8%
+...
+
+Now we can see the trend.
+
+12. Why are we using sequential windows?
+
+Because forecasting requires a sequence.
+
+You can't forecast a trend from just one number.
+
+We need:
+
+Past → Present → Future
+
+That's why NETRA organizes predictions into sequential traffic windows.
+
+13. What does our dashboard show?
+
+Your Streamlit dashboard basically has:
+
+              NETRA
+       Network Attack Forecasting
+
+Current Risk       6.33%
+Forecast Risk      9.36%
+Risk Level         LOW
+Traffic Windows    XXXX
+
+        📈 Risk Graph
+
+Observed Risk ────────╮
+                       ╲
+                        ╲ Forecast
+                         ╲───────
+
+       Next 5 Minutes
+       7.24%
+       7.77%
+       8.30%
+       8.83%
+       9.36%
+
+So the judge can see the entire process, rather than just hearing about it.
+
+14. What does LOW / MEDIUM / HIGH / CRITICAL mean?
+
+Our prototype uses thresholds.
+
+Conceptually:
+
+0–30%     → LOW
+30–60%    → MEDIUM
+60–80%    → HIGH
+80–100%   → CRITICAL
+
+So if predicted risk reaches 85%:
+
+🚨 CRITICAL
+
+If it is 70%:
+
+⚠️ HIGH
+
+If it is 15%:
+
+🟢 LOW
+
+15. What does "Trend" mean?
+
+Very simple.
+
+Increasing
+
+Risk is going up.
+
+20 → 30 → 40 → 50
+Decreasing
+
+Risk is going down.
+
+70 → 60 → 45 → 30
+Stable
+
+Risk isn't changing significantly.
+
+20 → 21 → 20 → 22
+16. What does our current result mean?
+
+Your current prototype produced:
+
+Current attack probability: 6.33%
+
+Forecast:
+7.24%
+7.77%
+8.30%
+8.83%
+9.36%
+
+Risk Level: LOW
+Trend: STABLE
+
+Explain it like this:
+
+“At the current point, the estimated attack risk is low. The forecasting module projects a gradual increase to around 9.36% over the next five minutes, but this remains within our low-risk range.”
+
+Don't say:
+
+“There will be a 9.36% attack in five minutes.”
+
+That's not what the model means.
+
+17. Why is the forecast only 5 minutes?
+
+Judge:
+
+“Why only five minutes?”
+
+Answer:
+
+“For the prototype we selected a short forecasting horizon because cybersecurity response needs timely information. The forecasting window can be extended in the production version depending on the network environment and model performance.”
+
+18. What happens if the risk becomes HIGH?
+
+Say:
+
+“NETRA would display a high-risk warning on the dashboard. In a production deployment, this alert could be connected to security systems so that administrators can investigate or automatically trigger mitigation procedures.”
+
+Important:
+
+Our current prototype does NOT automatically block the attacker.
+
+Don't claim it does.
+
+19. Can NETRA identify DDoS specifically?
+
+Again, VERY IMPORTANT.
+
+Current model:
+
+BENIGN
+   ↓
+ATTACK
+
+It doesn't currently perform detailed attack-type classification.
+
+If judge asks:
+
+“Can it tell me whether it's DDoS or PortScan?”
+
+Answer:
+
+“The current prototype focuses on overall attack-risk forecasting. Since our current classifier is binary, detailed attack-type classification is a planned extension. We can extend it to multiclass classification in the next version.”
+
+Perfectly honest.
+
+20. What technologies did we use?
+
+Tell judges:
+
+Python
+    ↓
+Pandas / NumPy
+    ↓
+Scikit-learn
+    ↓
+Random Forest
+    ↓
+Joblib
+    ↓
+Streamlit
+    ↓
+Plotly
+
+Simple explanation:
+
+Technology	Purpose
+Python	Main programming language
+Pandas	Handle network dataset
+NumPy	Numerical calculations
+Scikit-learn	Machine learning
+Random Forest	Attack detection
+Joblib	Save/load trained model
+Streamlit	Dashboard
+Plotly	Graphs
+
+They don't need to memorize package names unless judges ask.
+
+21. How did we train the model?
+
+Simple story:
+
+CIC-IDS2017
+      ↓
+Clean data
+      ↓
+Normal vs Attack
+      ↓
+Select features
+      ↓
+Train Random Forest
+      ↓
+Test model
+      ↓
+Save trained model
+
+Your actual training used 500,000 sampled rows for the prototype because the full dataset was huge.
+
+If asked:
+
+“Why didn't you train on all 2.8 million rows?”
+
+Answer:
+
+“The full dataset contains over 2.8 million flows, so for the rapid prototype we used a stratified sample of 500,000 rows to reduce training time while maintaining both classes. The production version can use the complete dataset and larger-scale training infrastructure.”
+
+22. What accuracy did we get?
+
+Your model produced:
+
+99.89% accuracy
+
+But bro — be careful here.
+
+Don't say:
+
+“NETRA has 99.89% real-world accuracy.”
+
+Say:
+
+“On our prototype's held-out test split, the Random Forest achieved approximately 99.89% accuracy.”
+
+If the judge asks whether that guarantees real-world performance:
+
+“No. CIC-IDS2017 is a benchmark dataset, and real-world traffic can be different. A production system would require temporal and live-network validation.”
+
+That answer will sound much more mature.
+
+23. What is the complete functioning?
+
+Tell your teammates to memorize this:
+
+        NETWORK TRAFFIC
+               ↓
+       DATA PREPROCESSING
+               ↓
+       70 NETWORK FEATURES
+               ↓
+        RANDOM FOREST
+               ↓
+      ATTACK PROBABILITY
+               ↓
+      TRAFFIC WINDOWS
+               ↓
+      TREND ANALYSIS
+               ↓
+      5-MINUTE FORECAST
+               ↓
+        RISK LEVEL
+               ↓
+        DASHBOARD
+               ↓
+           ALERT
+In one sentence:
+
+“We take network traffic, extract and clean its features, use Random Forest to estimate attack probability, analyze the recent sequence of probabilities, forecast the next five minutes, and display the resulting risk level on our dashboard.”
+
+That is your entire project.
